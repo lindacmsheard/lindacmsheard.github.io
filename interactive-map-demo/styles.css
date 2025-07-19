@@ -24,29 +24,6 @@ body {
     overflow: hidden;
 }
 
-/* Header styling */
-.header {
-    padding: 15px 20px;
-    background: #0d0d0d;
-    border-bottom: 1px solid #333;
-    color: #00d4d4;
-    text-align: center;
-}
-
-.header h1 {
-    font-size: 1.2rem;
-    font-weight: normal;
-    margin-bottom: 5px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-.header p {
-    font-size: 0.8rem;
-    opacity: 0.7;
-    font-weight: normal;
-}
-
 /* Controls styling */
 .controls {
     display: flex;
@@ -95,11 +72,19 @@ body {
 /* Map container styling */
 .map-container {
     position: relative;
-    height: 500px;
+    height: 600px;
     margin: 15px;
     border: 1px solid #333;
     overflow: hidden;
     box-shadow: inset 0 0 10px rgba(0, 212, 212, 0.1);
+    display: flex;
+    gap: 15px;
+}
+
+.map-wrapper {
+    flex: 1;
+    height: 100%;
+    position: relative;
 }
 
 #map {
@@ -254,21 +239,19 @@ body {
 
 /* Coordinate panel styling */
 .coordinate-panel {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 280px;
+    width: 320px;
     background: #1a1a1a;
     border: 1px solid #00d4d4;
-    z-index: 1000;
     transition: all 0.2s ease;
     box-shadow: 0 0 15px rgba(0, 212, 212, 0.2);
+    flex-shrink: 0;
+    overflow-y: auto;
 }
 
 .coordinate-panel.hidden {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(10px);
+    width: 0;
+    border-width: 0;
+    overflow: hidden;
 }
 
 .panel-header {
@@ -476,18 +459,6 @@ body {
         padding: 5px;
     }
     
-    .header {
-        padding: 10px 15px;
-    }
-    
-    .header h1 {
-        font-size: 1rem;
-    }
-    
-    .header p {
-        font-size: 0.7rem;
-    }
-    
     .controls {
         padding: 8px 15px;
         justify-content: stretch;
@@ -501,19 +472,25 @@ body {
     }
     
     .map-container {
-        height: 400px;
+        height: 500px;
         margin: 10px;
+        flex-direction: column;
     }
     
     .coordinate-panel {
-        position: fixed;
-        top: auto;
-        bottom: 10px;
-        right: 10px;
-        left: 10px;
         width: auto;
-        max-height: 60vh;
-        overflow-y: auto;
+        max-height: 200px;
+        order: -1;
+    }
+    
+    .coordinate-panel.hidden {
+        max-height: 0;
+        width: auto;
+    }
+    
+    .map-wrapper {
+        flex: 1;
+        min-height: 300px;
     }
     
     .instruction-grid {
@@ -533,40 +510,14 @@ body {
 }
 
 @media (max-width: 480px) {
-    .header h1 {
-        font-size: 0.9rem;
-    }
-    
-    .header p {
-        font-size: 0.6rem;
-    }
-    
     .map-container {
-        height: 350px;
+        height: 450px;
         margin: 8px;
     }
     
-    .coordinate-panel {
-        bottom: 5px;
-        right: 5px;
-        left: 5px;
+    .map-wrapper {
+        min-height: 250px;
     }
-}
-
-/* Animation for panel showing */
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.coordinate-panel:not(.hidden) {
-    animation: slideInRight 0.2s ease;
 }
 
 /* Tooltip styling */

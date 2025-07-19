@@ -12,11 +12,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Interactive Map Demo</h1>
-            <p>Draw bounding boxes on the map and view their coordinates!</p>
-        </div>
-        
         <div class="controls">
             <button id="drawBtn" class="control-btn">
                 <span class="btn-icon">📐</span>
@@ -29,24 +24,6 @@
         </div>
         
         <div class="map-container">
-            <div id="map">
-                <!-- Fallback content when Leaflet is not available -->
-                <div id="mapFallback" class="map-fallback">
-                    <div class="fallback-content">
-                        <h3>🗺️ Interactive Map</h3>
-                        <p>This is a simulation of the Leaflet.js map functionality.</p>
-                        <p><strong>In production, this will show a real interactive map using Leaflet.js</strong></p>
-                        <div class="demo-area">
-                            <p>Click "Draw Bounding Box" then click and drag in this area to simulate drawing:</p>
-                            <div id="drawingArea" class="drawing-area">
-                                <div class="grid-overlay"></div>
-                                <div id="boundingBox" class="bounding-box hidden"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <div id="coordinatePanel" class="coordinate-panel hidden">
                 <div class="panel-header">
                     <h3>Bounding Box Coordinates</h3>
@@ -81,6 +58,26 @@
                 <div class="panel-actions">
                     <button id="copyBtn" class="action-btn">Copy Coordinates</button>
                     <button id="exportBtn" class="action-btn">Export JSON</button>
+                </div>
+            </div>
+            
+            <div class="map-wrapper">
+                <div id="map">
+                    <!-- Fallback content when Leaflet is not available -->
+                    <div id="mapFallback" class="map-fallback">
+                        <div class="fallback-content">
+                            <h3>🗺️ Interactive Map</h3>
+                            <p>This is a simulation of the Leaflet.js map functionality.</p>
+                            <p><strong>In production, this will show a real interactive map using Leaflet.js</strong></p>
+                            <div class="demo-area">
+                                <p>Click "Draw Bounding Box" then click and drag in this area to simulate drawing:</p>
+                                <div id="drawingArea" class="drawing-area">
+                                    <div class="grid-overlay"></div>
+                                    <div id="boundingBox" class="bounding-box hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
