@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map Demo</title>
+    
+    <!-- Leaflet CSS - Will load from CDN in production -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Interactive Map Demo</h1>
+            <p>Draw bounding boxes on the map and view their coordinates!</p>
+        </div>
+        
+        <div class="controls">
+            <button id="drawBtn" class="control-btn">
+                <span class="btn-icon">📐</span>
+                Draw Bounding Box
+            </button>
+            <button id="clearBtn" class="control-btn">
+                <span class="btn-icon">🗑️</span>
+                Clear All
+            </button>
+        </div>
+        
+        <div class="map-container">
+            <div id="map">
+                <!-- Fallback content when Leaflet is not available -->
+                <div id="mapFallback" class="map-fallback">
+                    <div class="fallback-content">
+                        <h3>🗺️ Interactive Map</h3>
+                        <p>This is a simulation of the Leaflet.js map functionality.</p>
+                        <p><strong>In production, this will show a real interactive map using Leaflet.js</strong></p>
+                        <div class="demo-area">
+                            <p>Click "Draw Bounding Box" then click and drag in this area to simulate drawing:</p>
+                            <div id="drawingArea" class="drawing-area">
+                                <div class="grid-overlay"></div>
+                                <div id="boundingBox" class="bounding-box hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="coordinatePanel" class="coordinate-panel hidden">
+                <div class="panel-header">
+                    <h3>Bounding Box Coordinates</h3>
+                    <button id="closePanelBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="panel-content">
+                    <div class="coordinate-row">
+                        <label>North (Top):</label>
+                        <span id="northCoord">-</span>
+                    </div>
+                    <div class="coordinate-row">
+                        <label>South (Bottom):</label>
+                        <span id="southCoord">-</span>
+                    </div>
+                    <div class="coordinate-row">
+                        <label>East (Right):</label>
+                        <span id="eastCoord">-</span>
+                    </div>
+                    <div class="coordinate-row">
+                        <label>West (Left):</label>
+                        <span id="westCoord">-</span>
+                    </div>
+                    <div class="coordinate-row">
+                        <label>Center:</label>
+                        <span id="centerCoord">-</span>
+                    </div>
+                    <div class="coordinate-row">
+                        <label>Area:</label>
+                        <span id="areaInfo">-</span>
+                    </div>
+                </div>
+                <div class="panel-actions">
+                    <button id="copyBtn" class="action-btn">Copy Coordinates</button>
+                    <button id="exportBtn" class="action-btn">Export JSON</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="deployment-note">
+            <h3>📋 Deployment Notes:</h3>
+            <p>
+                <strong>This demo includes fallback functionality for testing environments.</strong>
+                When deployed to GitHub Pages or any web server with internet access, 
+                the real Leaflet.js library will load from the CDN and provide full interactive map functionality.
+            </p>
+            <ul>
+                <li>✅ Leaflet.js CDN integration ready</li>
+                <li>✅ High-contrast thin-line styling</li>
+                <li>✅ Mobile-optimized touch support</li>
+                <li>✅ Coordinate display and export</li>
+                <li>✅ Database integration structure provided</li>
+            </ul>
+        </div>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <div class="instruction-grid">
+                <div class="instruction-item">
+                    <span class="instruction-icon">🖱️</span>
+                    <div>
+                        <strong>Desktop:</strong> Click "Draw Bounding Box" then click and drag on the map to create a rectangle
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">📱</span>
+                    <div>
+                        <strong>Mobile:</strong> Tap "Draw Bounding Box" then tap and drag to draw your bounding box
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">📍</span>
+                    <div>
+                        <strong>Coordinates:</strong> The coordinate panel will show automatically after drawing
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">💾</span>
+                    <div>
+                        <strong>Export:</strong> Copy coordinates or export as JSON for database storage
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="future-expansion">
+            <h3>Future Database Integration:</h3>
+            <p>
+                Bounding box coordinates can be stored in a database with the following structure:
+            </p>
+            <pre><code>{
+  "id": "unique_identifier",
+  "name": "user_defined_name",
+  "bounds": {
+    "north": 40.7831,
+    "south": 40.7489,
+    "east": -73.9441,
+    "west": -73.9927
+  },
+  "center": {
+    "lat": 40.766,
+    "lng": -73.9684
+  },
+  "area_km2": 2.45,
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}</code></pre>
+            <p><strong>Database Storage Options:</strong></p>
+            <ul>
+                <li><strong>PostgreSQL with PostGIS:</strong> For advanced geospatial queries and operations</li>
+                <li><strong>MongoDB:</strong> For flexible JSON document storage with geospatial indexing</li>
+                <li><strong>SQLite with SpatiaLite:</strong> For lightweight applications</li>
+                <li><strong>Cloud Solutions:</strong> AWS DynamoDB, Google Cloud Firestore, or Firebase</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Leaflet JavaScript - Will load from CDN in production -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
