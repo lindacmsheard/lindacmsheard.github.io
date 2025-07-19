@@ -49,6 +49,9 @@ class InteractiveMapDemo {
         
         // Disable default Leaflet drawing
         this.map.doubleClickZoom.disable();
+        
+        // Add touch event prevention for better mobile support
+        this.setupMobileOptimization();
     }
     
     initControls() {
@@ -200,12 +203,16 @@ class InteractiveMapDemo {
             this.map.touchZoom.disable();
             this.map.doubleClickZoom.disable();
             this.map.scrollWheelZoom.disable();
+            this.map.boxZoom.disable();
+            this.map.keyboard.disable();
         } else {
             this.map.getContainer().style.cursor = '';
             this.map.dragging.enable();
             this.map.touchZoom.enable();
             this.map.doubleClickZoom.disable(); // Keep this disabled
             this.map.scrollWheelZoom.enable();
+            this.map.boxZoom.enable();
+            this.map.keyboard.enable();
             
             // Clean up any temporary rectangle
             if (this.tempRectangle) {
@@ -216,6 +223,30 @@ class InteractiveMapDemo {
         }
         
         this.updateDrawButtonState();
+    }
+    
+    setupMobileOptimization() {
+        // Add event listeners to prevent default touch behaviors during drawing
+        const mapContainer = this.map.getContainer();
+        
+        mapContainer.addEventListener('touchmove', (e) => {
+            if (this.isDrawingMode) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        mapContainer.addEventListener('touchstart', (e) => {
+            if (this.isDrawingMode) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Prevent context menu on mobile during drawing
+        mapContainer.addEventListener('contextmenu', (e) => {
+            if (this.isDrawingMode) {
+                e.preventDefault();
+            }
+        });
     }
     
     updateDrawButtonState() {
