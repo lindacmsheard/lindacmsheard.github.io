@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Visuals Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Visuals Demo</h1>
+        <p>Draw shapes on the canvas using your mouse!</p>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="shapeSelect">Shape:</label>
+                <select id="shapeSelect">
+                    <option value="circle">Circle</option>
+                    <option value="square">Square</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="colorPicker">Color:</label>
+                <input type="color" id="colorPicker" value="#3498db">
+            </div>
+            
+            <div class="control-group">
+                <label for="sizeSlider">Size:</label>
+                <input type="range" id="sizeSlider" min="10" max="100" value="30">
+                <span id="sizeValue">30</span>px
+            </div>
+            
+            <button id="clearCanvas">Clear Canvas</button>
+        </div>
+        
+        <canvas id="drawingCanvas" width="800" height="600"></canvas>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ul>
+                <li>Select a shape type (Circle or Square)</li>
+                <li>Choose your preferred color</li>
+                <li>Adjust the size using the slider</li>
+                <li>Click and drag on the canvas to draw</li>
+                <li>Use the "Clear Canvas" button to start over</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
