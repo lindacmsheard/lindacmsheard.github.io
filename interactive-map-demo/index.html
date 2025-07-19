@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map Demo - Bounding Box Tool</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interactive Map Demo</h1>
+            <p>Draw a bounding box on the map to see its coordinates</p>
+        </header>
+        
+        <div class="main-content">
+            <!-- Map container -->
+            <div id="map"></div>
+            
+            <!-- Controls and coordinates panel -->
+            <div class="controls-panel">
+                <div class="control-section">
+                    <h3>Controls</h3>
+                    <button id="drawButton" class="btn btn-primary">Draw Bounding Box</button>
+                    <button id="clearButton" class="btn btn-secondary">Clear All</button>
+                </div>
+                
+                <div class="coordinates-section">
+                    <h3>Bounding Box Coordinates</h3>
+                    <div id="coordinatesDisplay" class="coordinates-display">
+                        <p class="placeholder">Draw a bounding box to see coordinates</p>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>Click "Draw Bounding Box" to start drawing mode</li>
+                        <li>Click and drag on the map to create a rectangle</li>
+                        <li>View the coordinates in the panel above</li>
+                        <li>Use "Clear All" to remove all rectangles</li>
+                        <li>Touch-friendly for mobile devices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Future Enhancement:</strong> The bounding box coordinates can be extended to store in a database by sending the coordinate data to a backend API endpoint via AJAX/fetch requests. The coordinates object contains all necessary geographic bounds (north, south, east, west) that can be stored in spatial database columns or as JSON.</p>
+        </footer>
+    </div>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
