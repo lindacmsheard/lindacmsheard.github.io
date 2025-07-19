@@ -32,9 +32,54 @@ class InteractiveMapDemo {
     }
     
     init() {
+        // Check if Leaflet is available
+        if (typeof L === 'undefined') {
+            this.initFallbackMode();
+            return;
+        }
+        
         this.initMap();
         this.initControls();
         this.initDrawingEvents();
+    }
+    
+    initFallbackMode() {
+        // Initialize fallback mode when Leaflet is not available
+        const mapElement = document.getElementById('map');
+        mapElement.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; border: 2px dashed #ccc; text-align: center; padding: 20px;">
+                <div>
+                    <h3 style="color: #666; margin-bottom: 10px;">🗺️ Interactive Map</h3>
+                    <p style="color: #888; margin-bottom: 15px;">This demo requires an internet connection to load Leaflet.js from CDN.</p>
+                    <p style="color: #888;"><strong>When deployed to GitHub Pages or a web server with internet access, this will show a fully interactive map.</strong></p>
+                    <div style="margin-top: 20px; padding: 15px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+                        <p style="color: #333; margin: 0;"><strong>Features when online:</strong></p>
+                        <ul style="color: #666; text-align: left; margin: 10px 0 0 0; padding-left: 20px;">
+                            <li>Interactive map with zoom and pan</li>
+                            <li>Draw bounding boxes with touch support</li>
+                            <li>Mobile-optimized interactions</li>
+                            <li>Coordinate display and export</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Initialize controls for fallback mode
+        this.initControlsOnly();
+    }
+    
+    initControlsOnly() {
+        const drawButton = document.getElementById('drawButton');
+        const clearButton = document.getElementById('clearButton');
+        
+        drawButton.addEventListener('click', () => {
+            alert('This feature requires an internet connection to load the map library. When deployed online, you will be able to draw bounding boxes on an interactive map.');
+        });
+        
+        clearButton.addEventListener('click', () => {
+            alert('This feature requires an internet connection to load the map library.');
+        });
     }
     
     initMap() {
@@ -227,6 +272,8 @@ class InteractiveMapDemo {
     
     setupMobileOptimization() {
         // Add event listeners to prevent default touch behaviors during drawing
+        if (!this.map) return; // Exit if map is not available
+        
         const mapContainer = this.map.getContainer();
         
         mapContainer.addEventListener('touchmove', (e) => {
