@@ -101,12 +101,12 @@ class InteractiveMapApp {
             // Create preview rectangle
             const bounds = L.latLngBounds([startPoint, currentPoint]);
             currentRectangle = L.rectangle(bounds, {
-                color: '#e74c3c',
-                weight: 2,
+                color: '#00d4d4',
+                weight: 1,
                 opacity: 0.8,
                 fillOpacity: 0.1,
-                fillColor: '#e74c3c',
-                dashArray: '5, 5'
+                fillColor: '#00d4d4',
+                dashArray: '3, 3'
             }).addTo(this.map);
         });
         
@@ -244,11 +244,11 @@ class InteractiveMapApp {
         
         // Create the rectangle
         const rectangle = L.rectangle(bounds, {
-            color: '#e74c3c',
-            weight: 2,
+            color: '#00d4d4',
+            weight: 1,
             opacity: 1,
             fillOpacity: 0.1,
-            fillColor: '#e74c3c'
+            fillColor: '#00d4d4'
         });
         
         this.drawnItems.addLayer(rectangle);
