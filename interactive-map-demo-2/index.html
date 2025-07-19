@@ -62,6 +62,49 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     
+    <!-- Simple Touch Enhancement for Mobile -->
+    <script>
+    // Simple touch enhancement to improve mobile experience
+    if (typeof L !== 'undefined') {
+        L.Map.addInitHook(function () {
+            if (L.Browser.touch && !L.Browser.pointer) {
+                this.addHandler('tap', L.Map.TapHandler);
+            }
+        });
+        
+        L.Map.TapHandler = L.Handler.extend({
+            addHooks: function () {
+                this._map.on('touchstart', this._onTouchStart, this);
+                this._map.on('touchend', this._onTouchEnd, this);
+            },
+            
+            removeHooks: function () {
+                this._map.off('touchstart', this._onTouchStart, this);
+                this._map.off('touchend', this._onTouchEnd, this);
+            },
+            
+            _onTouchStart: function (e) {
+                this._startTime = Date.now();
+                this._startPos = e.touches[0];
+            },
+            
+            _onTouchEnd: function (e) {
+                var elapsed = Date.now() - this._startTime;
+                var distance = this._startPos ? 
+                    Math.sqrt(Math.pow(e.changedTouches[0].clientX - this._startPos.clientX, 2) + 
+                             Math.pow(e.changedTouches[0].clientY - this._startPos.clientY, 2)) : 0;
+                
+                if (elapsed < 300 && distance < 20) {
+                    this._map.fire('tap', {
+                        latlng: this._map.mouseEventToLatLng(e.changedTouches[0]),
+                        originalEvent: e
+                    });
+                }
+            }
+        });
+    }
+    </script>
+
     <!-- Custom JavaScript -->
     <script src="app.js"></script>
 </body>

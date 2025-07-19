@@ -61,6 +61,9 @@ class InteractiveMapApp {
         
         // Set up Leaflet-specific drawing functionality
         this.setupLeafletDrawing();
+        
+        // Initialize mobile optimization after map is ready
+        this.setupMobileOptimization();
     }
     
     initializeFallbackMap() {
@@ -86,10 +89,22 @@ class InteractiveMapApp {
             this.map.touchZoom.disable();
             this.map.doubleClickZoom.disable();
             this.map.scrollWheelZoom.disable();
+            this.map.boxZoom.disable();
+            this.map.keyboard.disable();
+            
+            // Prevent default touch behaviors
+            if (e.originalEvent) {
+                e.originalEvent.preventDefault();
+            }
         });
         
         this.map.on('mousemove touchmove', (e) => {
             if (!isDrawing || !startPoint) return;
+            
+            // Prevent default touch behaviors
+            if (e.originalEvent) {
+                e.originalEvent.preventDefault();
+            }
             
             const currentPoint = e.latlng;
             
@@ -120,6 +135,8 @@ class InteractiveMapApp {
             this.map.touchZoom.enable();
             this.map.doubleClickZoom.enable();
             this.map.scrollWheelZoom.enable();
+            this.map.boxZoom.enable();
+            this.map.keyboard.enable();
             
             if (currentRectangle) {
                 this.map.removeLayer(currentRectangle);
@@ -288,6 +305,23 @@ class InteractiveMapApp {
                 e.preventDefault();
             }
         });
+        
+        // Add additional touch event handling for better mobile support
+        if (this.leafletLoaded && this.map) {
+            const mapContainer = this.map.getContainer();
+            
+            mapContainer.addEventListener('touchmove', (e) => {
+                if (this.isDrawingMode) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            mapContainer.addEventListener('touchstart', (e) => {
+                if (this.isDrawingMode) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
     }
     
     showLoadingAnimation() {
