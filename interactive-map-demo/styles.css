@@ -1,0 +1,534 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header styling */
+.header {
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Controls styling */
+.controls {
+    display: flex;
+    gap: 15px;
+    padding: 20px 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border-color: #3498db;
+}
+
+.control-btn.active {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-color: #2980b9;
+}
+
+.btn-icon {
+    font-size: 16px;
+}
+
+/* Map container styling */
+.map-container {
+    position: relative;
+    height: 500px;
+    margin: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* Fallback map styling for testing environments */
+.map-fallback {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), 
+                linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #f8f9fa 75%), 
+                linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.fallback-content {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    border: 2px solid #3498db;
+}
+
+.fallback-content h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.demo-area {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #3498db;
+}
+
+.drawing-area {
+    position: relative;
+    height: 200px;
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    border-radius: 5px;
+    margin-top: 15px;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+.grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(52, 152, 219, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 152, 219, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.bounding-box {
+    position: absolute;
+    border: 2px solid #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.bounding-box.hidden {
+    display: none;
+}
+
+/* Deployment note styling */
+.deployment-note {
+    padding: 20px 30px;
+    background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+    border-left: 4px solid #27ae60;
+    margin: 0;
+}
+
+.deployment-note h3 {
+    color: #27ae60;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.deployment-note p {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.deployment-note ul {
+    list-style: none;
+    padding: 0;
+}
+
+.deployment-note li {
+    color: #27ae60;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* High-contrast map styling overrides */
+.leaflet-container {
+    background: #f8f9fa;
+}
+
+/* Custom styling for drawn rectangles - thin, high contrast lines */
+.leaflet-interactive {
+    stroke: #e74c3c !important;
+    stroke-width: 2 !important;
+    stroke-opacity: 1 !important;
+    fill: rgba(231, 76, 60, 0.1) !important;
+    fill-opacity: 0.2 !important;
+}
+
+/* High contrast styling for draw controls */
+.leaflet-draw-toolbar a {
+    background-color: white !important;
+    border: 2px solid #2c3e50 !important;
+    color: #2c3e50 !important;
+}
+
+.leaflet-draw-toolbar a:hover {
+    background-color: #3498db !important;
+    color: white !important;
+}
+
+/* Coordinate panel styling */
+.coordinate-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 2px solid #3498db;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.coordinate-panel.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(20px);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.panel-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.panel-content {
+    padding: 20px;
+}
+
+.coordinate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f2f6;
+}
+
+.coordinate-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.coordinate-row label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 13px;
+}
+
+.coordinate-row span {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #3498db;
+    font-weight: 500;
+}
+
+.panel-actions {
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #27ae60, #229954);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(39, 174, 96, 0.3);
+}
+
+/* Instructions styling */
+.instructions {
+    padding: 30px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.instructions h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.instruction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.instruction-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.instruction-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.instruction-item strong {
+    color: #2c3e50;
+}
+
+/* Future expansion section */
+.future-expansion {
+    padding: 30px;
+    background: #2c3e50;
+    color: white;
+}
+
+.future-expansion h3 {
+    margin-bottom: 15px;
+    color: #3498db;
+    font-size: 1.3rem;
+}
+
+.future-expansion p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.future-expansion pre {
+    background: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    border-left: 4px solid #3498db;
+}
+
+.future-expansion code {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ecf0f1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        border-radius: 10px;
+    }
+    
+    .header {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .controls {
+        padding: 15px 20px;
+        justify-content: stretch;
+    }
+    
+    .control-btn {
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+    }
+    
+    .map-container {
+        height: 400px;
+        margin: 20px;
+    }
+    
+    .coordinate-panel {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        width: auto;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .instruction-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .instructions,
+    .future-expansion {
+        padding: 20px;
+    }
+    
+    .future-expansion pre {
+        font-size: 12px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+    }
+    
+    .map-container {
+        height: 350px;
+        margin: 15px;
+    }
+    
+    .coordinate-panel {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+    }
+}
+
+/* Animation for panel showing */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.coordinate-panel:not(.hidden) {
+    animation: slideInRight 0.3s ease;
+}
+
+/* Tooltip styling */
+.custom-tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.custom-tooltip.show {
+    opacity: 1;
+}
